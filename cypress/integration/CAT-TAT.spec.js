@@ -2,7 +2,7 @@
 
 describe('Central de Atendimento ao Cliente TAT', function () {
   beforeEach(() => {
-    cy.visit('index.html')
+    //cy.visit('./src/index.html')
   })
   //Aula 01 - Introdução | Estrutura do curso | Pré-requisitos | Conhecendo a aplicação
   //Aula 02 - Primeiro teste em Cypress
@@ -178,5 +178,5 @@ describe('Central de Atendimento ao Cliente TAT', function () {
   //Aula 10 - Documentaçã do projeto
   //Atualização do arquivo readme
 
-  //Aula 11 - Integração contínua (CI) com GitHub Actions
+  //Aula 1 - Integração contínua (CI) com GitHub Actions
 })
