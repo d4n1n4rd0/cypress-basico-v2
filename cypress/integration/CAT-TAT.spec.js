@@ -4,14 +4,14 @@ describe('Central de Atendimento ao Cliente TAT', function () {
   beforeEach(() => {
     cy.visit('./src/index.html')
   })
-
-  //Aula 01 - Primeiro teste em Cypress
+  //Aula 01 - Introdução | Estrutura do curso | Pré-requisitos | Conhecendo a aplicação
+  //Aula 02 - Primeiro teste em Cypress
 
   it('verifica o título da aplicação', function () {
     cy.title().should('be.equal', 'Central de Atendimento ao Cliente TAT')
   })
 
-  //Aula 02 - Localizando, digitando e clicando em elementos
+  //Aula 03 - Localizando, digitando e clicando em elementos
 
   it('preenche os campos obrigatórios e envia o formulário', function () {
     const longText =
@@ -86,7 +86,7 @@ describe('Central de Atendimento ao Cliente TAT', function () {
     cy.contains('button', 'Enviar').click()
   })
 
-  //Aula 03 - Selecionando opções em campos de seleção suspensa
+  //Aula 04 - Selecionando opções em campos de seleção suspensa
 
   it('seleciona um produto (YouTube) por seu texto', function () {
     cy.get('#product').select('YouTube').should('have.value', 'youtube')
@@ -100,7 +100,7 @@ describe('Central de Atendimento ao Cliente TAT', function () {
     cy.get('#product').select(1).should('have.value', 'blog')
   })
 
-  //Aula 04 - Marcando inputs do tipo 'radio'
+  //Aula 05 - Marcando inputs do tipo 'radio'
 
   it('marca o tipo de atendimento "Feedback"', function () {
     cy.get('input[type="radio"][value="feedback"]')
@@ -116,7 +116,7 @@ describe('Central de Atendimento ao Cliente TAT', function () {
       })
   })
 
-  //Aula 05 - Marcando e desmarcando inputs do tipo 'checkbox'
+  //Aula 06 - Marcando e desmarcando inputs do tipo 'checkbox'
 
   it('marca ambos checkboxes, depois desmarca o último', function () {
     cy.get('input[type="checkbox"]')
@@ -127,7 +127,7 @@ describe('Central de Atendimento ao Cliente TAT', function () {
       .should('not.to.be.checked')
   })
 
-  //Aula 06 - Fazendo upload de arquivos com Cypress
+  //Aula 07 - Fazendo upload de arquivos com Cypress
 
   it('seleciona um arquivo da pasta fixtures', function () {
     cy.get('input[type="file"]#file-upload')
@@ -158,7 +158,7 @@ describe('Central de Atendimento ao Cliente TAT', function () {
       }) 
   })
 
-   //Aula 07 - Lidando com links que abrem em outra aba
+   //Aula 08 - Lidando com links que abrem em outra aba
 
    it('verifica que a política de privacidade abre em outra aba sem a necessidade de um clique', function() {
     cy.get('#privacy a')
@@ -171,10 +171,12 @@ describe('Central de Atendimento ao Cliente TAT', function () {
       .click()
    })
 
-  //Aula 08 - Simulando o viewport de um dispositivo móvel 
+  //Aula 09 - Simulando o viewport de um dispositivo móvel 
   //Criado script "cy:open-mobile" no arquivo package.json para rodar os testesmodo interativo
   //Criado script "cy:run-mobile" no arquivo package.json para rodar os testes no modo headless
 
-  //Aula 09 - Documentaçã do projeto
+  //Aula 10 - Documentaçã do projeto
   //Atualização do arquivo readme
+
+  //Aula 11 - Integração contínua (CI) com GitHub Actions
 })
