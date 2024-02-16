@@ -1,21 +1,23 @@
 /// <reference types='cypress' />
 
 describe('Central de Atendimento ao Cliente TAT', function () {
+  const THREE_SECONDS_IN_MS = 3000
+  const longText = Cypress._.repeat('teste123 ', 40)    
+
   beforeEach(() => {
     cy.visit('./src/index.html')
   })
-  //Aula 01 - Introdução | Estrutura do curso | Pré-requisitos | Conhecendo a aplicação
-  //Aula 02 - Primeiro teste em Cypress
+
+  //Aula 01 - Primeiro teste em Cypress
 
   it('verifica o título da aplicação', function () {
     cy.title().should('be.equal', 'Central de Atendimento ao Cliente TAT')
   })
 
-  //Aula 03 - Localizando, digitando e clicando em elementos
+  //Aula 02 - Localizando, digitando e clicando em elementos
 
   it('preenche os campos obrigatórios e envia o formulário', function () {
-    const longText =
-      'Lorem ipsum dolor sit amet. In beatae omnis id labore harum sed sint quos qui nisi facilis sit voluptates nihil est atque omnis qui nobis perspiciatis. Ad provident tempora ad sint voluptatum est eius numquam non magni galisum ad quos atque. A quasi error At consequatur itaque est fugit laudantium.'
+    cy.clock()
 
     cy.get('#firstName').type('Teste')
     cy.get('#lastName').type('123')
@@ -23,15 +25,25 @@ describe('Central de Atendimento ao Cliente TAT', function () {
     cy.get('#open-text-area').type(longText, { delay: 0 })
     cy.get('button[type="submit"]').click()
     cy.get('.success').should('be.visible')
+
+    cy.tick(THREE_SECONDS_IN_MS)
+    
+    cy.get('.success').should('not.be.visible')
   })
 
   it('exibe mensagem de erro ao submeter o formulário com um email com formatação inválida', function () {
+    cy.clock()
+
     cy.get('#firstName').type('Teste')
     cy.get('#lastName').type('123')
     cy.get('#email').type('teste@teste')
     cy.get('#open-text-area').type('teste')
     cy.get('button[type="submit"]').click()
     cy.get('.error').should('be.visible')
+
+    cy.tick(THREE_SECONDS_IN_MS)
+
+    cy.get('.error').should('not.be.visible')
   })
 
   it('campo telefone continua vazio quando preenchido valor não-numérico', function () {
@@ -39,6 +51,8 @@ describe('Central de Atendimento ao Cliente TAT', function () {
   })
 
   it('exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário', function () {
+    cy.clock()
+
     cy.get('#firstName').type('Teste')
     cy.get('#lastName').type('123')
     cy.get('#email').type('teste@teste.com')
@@ -46,6 +60,10 @@ describe('Central de Atendimento ao Cliente TAT', function () {
     cy.get('#phone-checkbox').check()
     cy.get('button[type="submit"]').click()
     cy.get('.error').should('be.visible')
+
+    cy.tick(THREE_SECONDS_IN_MS)
+
+    cy.get('.error').should('not.be.visible')
   })
 
   it('preenche e limpa os campos nome, sobrenome, email e telefone', function () {
@@ -74,19 +92,22 @@ describe('Central de Atendimento ao Cliente TAT', function () {
   it('exibe mensagem de erro ao submeter o formulário sem preencher os campos obrigatórios', function () {
     cy.get('button[type="submit"]').click()
     cy.get('.error').should('be.visible')
+
   })
 
-  it('envia o formuário com sucesso usando um comando customizado', function () {
+  Cypress._.times(5, () => {
+      it('envia o formuário com sucesso usando um comando customizado', function () {
     cy.fillMandatoryFieldsAndSubmit()
 
     cy.get('.success').should('be.visible')
+  })
   })
 
   it('utilizando o cy.contains', function () {
     cy.contains('button', 'Enviar').click()
   })
 
-  //Aula 04 - Selecionando opções em campos de seleção suspensa
+  //Aula 03 - Selecionando opções em campos de seleção suspensa
 
   it('seleciona um produto (YouTube) por seu texto', function () {
     cy.get('#product').select('YouTube').should('have.value', 'youtube')
@@ -100,7 +121,7 @@ describe('Central de Atendimento ao Cliente TAT', function () {
     cy.get('#product').select(1).should('have.value', 'blog')
   })
 
-  //Aula 05 - Marcando inputs do tipo 'radio'
+  //Aula 04 - Marcando inputs do tipo 'radio'
 
   it('marca o tipo de atendimento "Feedback"', function () {
     cy.get('input[type="radio"][value="feedback"]')
@@ -116,7 +137,7 @@ describe('Central de Atendimento ao Cliente TAT', function () {
       })
   })
 
-  //Aula 06 - Marcando e desmarcando inputs do tipo 'checkbox'
+  //Aula 05 - Marcando e desmarcando inputs do tipo 'checkbox'
 
   it('marca ambos checkboxes, depois desmarca o último', function () {
     cy.get('input[type="checkbox"]')
@@ -127,7 +148,7 @@ describe('Central de Atendimento ao Cliente TAT', function () {
       .should('not.to.be.checked')
   })
 
-  //Aula 07 - Fazendo upload de arquivos com Cypress
+  //Aula 06 - Fazendo upload de arquivos com Cypress
 
   it('seleciona um arquivo da pasta fixtures', function () {
     cy.get('input[type="file"]#file-upload')
@@ -158,7 +179,7 @@ describe('Central de Atendimento ao Cliente TAT', function () {
       }) 
   })
 
-   //Aula 08 - Lidando com links que abrem em outra aba
+   //Aula 07 - Lidando com links que abrem em outra aba
 
    it('verifica que a política de privacidade abre em outra aba sem a necessidade de um clique', function() {
     cy.get('#privacy a')
@@ -171,12 +192,71 @@ describe('Central de Atendimento ao Cliente TAT', function () {
       .click()
    })
 
-  //Aula 09 - Simulando o viewport de um dispositivo móvel 
+  //Aula 08 - Simulando o viewport de um dispositivo móvel 
   //Criado script "cy:open-mobile" no arquivo package.json para rodar os testesmodo interativo
   //Criado script "cy:run-mobile" no arquivo package.json para rodar os testes no modo headless
 
-  //Aula 10 - Documentaçã do projeto
+  //Aula 09 - Documentaçã do projeto
   //Atualização do arquivo readme
 
-  //Aula 1 - Integração contínua (CI) com GitHub Actions
+  //Aula 10 - Integração contínua (CI) com GitHub Actions
+  //Criação do pipeline de CI com o job para rodar os testes 
+  //Job disponível no arq ci.yml 
+
+  //Aula 11 - Avançando no uso do Cypress - cy.clock() e cy.tick()
+  //Atualização dos testes: 
+  //'preenche os campos obrigatórios e envia o formulário' 
+  //'exibe mensagem de erro ao submeter o formulário com um email com formatação inválida'
+  //'exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário'
+
+  //Aula 11 - Avançando no uso do Cypress - Lodash
+  //Utilizado o Lodash 'time' no teste 'envia o formuário com sucesso usando um comando customizado'
+  //Utilizado o Lodash 'repeat' no teste ''preenche os campos obrigatórios e envia o formulário' 
+
+  it('exibe e esconde as mensagens de sucesso e erro usando o .invoke', function() {
+    cy.get('.success')
+      .should('not.be.visible')
+      .invoke('show')
+      .should('be.visible')
+      .and('contain', 'Mensagem enviada com sucesso.')
+      .invoke('hide')
+      .should('not.be.visible')
+    cy.get('.error')
+      .should('not.be.visible')
+      .invoke('show')
+      .should('be.visible')
+      .and('contain', 'Valide os campos obrigatórios!')
+      .invoke('hide')
+      .should('not.be.visible')
+  })
+
+  it('preenche a area de texto usando o comando invoke', function () {
+    cy.get('#open-text-area')
+      .invoke('val', longText)
+      .should('have.value', longText)
+  
+  })
+
+  it('faz uma requisição http', function() {
+    cy.request('https://cac-tat.s3.eu-central-1.amazonaws.com/index.html')
+      .should(function(response) {
+        console.log(response)
+        const {status, statusText, body} = response
+        expect(status).to.equal(200);
+        expect(statusText).to.equal('OK')
+        expect(body).to.include('CAC TAT');
+      })
+  })
+
+  //Aula 13 - Desafio encontre o gato
+
+    it.only('encontre o gato na aplicação e mostre que ele está visível', function() {
+    cy.get('#cat')
+      .should('not.be.visible')
+      .invoke('show')
+      .should('be.visible')
+      //.and('contain', 'Mensagem enviada com sucesso.')
+      .invoke('hide')
+      .should('not.be.visible')
+  })
 })
