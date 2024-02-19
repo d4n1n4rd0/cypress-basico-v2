@@ -165,6 +165,7 @@ describe('Central de Atendimento ao Cliente TAT', function () {
       .should('not.have.value')
       .selectFile('cypress/fixtures/example.json', {action: 'drag-drop'})
       .then($input => {
+        console.log($input)
         expect($input[0].files[0].name).to.equal('example.json')
       }) 
   })
@@ -250,13 +251,13 @@ describe('Central de Atendimento ao Cliente TAT', function () {
 
   //Aula 13 - Desafio encontre o gato
 
-    it.only('encontre o gato na aplicação e mostre que ele está visível', function() {
+    it('encontre o gato escondido na aplicação e mostre que ele está visível', function() {
     cy.get('#cat')
       .should('not.be.visible')
       .invoke('show')
       .should('be.visible')
-      //.and('contain', 'Mensagem enviada com sucesso.')
       .invoke('hide')
       .should('not.be.visible')
   })
 })
+

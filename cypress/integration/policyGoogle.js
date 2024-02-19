@@ -1,6 +1,6 @@
 /// <reference types='cypress' />
 
-describe('Testes aleatórios para reforçar os conceitos aprendidos nas aulas', function () {
+describe('Reforço da aula 07 - Lidando com links que abrem em outra aba', function () {
   
     it('Valida a página de políticas Google', function () {
         cy.visit('https://www.google.com/intl/pt-BR/gmail/about/')
