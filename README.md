@@ -1,6 +1,6 @@
 # Testes automatizados com Cypress - Básico
 
-Projeto d automação de testes E2E com Cypress em uma aplicação simulando uma Central de Atendimento ao Cliente (CAT TAT)
+Projeto de automação de testes E2E com Cypress em uma aplicação simulando uma Central de Atendimento ao Cliente (CAT TAT)
 
 ## Abordagem Cypress:
 
